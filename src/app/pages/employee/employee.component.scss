@@ -1,0 +1,20 @@
+
+
+.employeeView {
+    display: flex;
+    padding: 5;
+    gap: 30px;
+
+    div {
+        padding: 30px;
+    }
+
+    .employeeList {
+        flex: 7;
+    }
+
+    .employeeUpdate {
+        flex: 3;
+
+    }
+}

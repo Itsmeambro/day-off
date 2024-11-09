@@ -1,0 +1,160 @@
+<!-- <div class="employeeView">
+    <div class="employeeList">
+        <table class="table">
+            <thead>
+              <tr>
+                <th scope="col">#</th>
+                <th scope="col">First</th>
+                <th scope="col">Last</th>
+                <th scope="col">Handle</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <th scope="row">1</th>
+                <td>Mark</td>
+                <td>Otto</td>
+                <td>mdo</td>
+              </tr>
+              <tr>
+                <th scope="row">2</th>
+                <td>Jacob</td>
+                <td>Thornton</td>
+                <td>fat</td>
+              </tr>
+              <tr>
+                <th scope="row">3</th>
+                <td>Larry</td>
+                <td>the Bird</td>
+                <td>twitter</td>
+              </tr>
+            </tbody>
+          </table>
+    </div>
+    <div class="employeeUpdate">
+
+    </div>
+</div> -->
+
+
+
+<div class="container-fluid my-4">
+    <div class="row">
+        <div class="col-8">
+            <div class="card">
+                <div class="card-header bg-secondary">
+                    <div class="row">
+                        <div class="col-6 text-white">
+                            <strong>Employee Portal</strong>
+                        </div>
+                        <div class="col-6 text-end">
+                            <button class="btn btn-warning" (click)="getEmployees()">Refresh</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <table class="table table-bordered" id="employeeTable">
+                        <thead>
+                            <tr>
+                                <th>Sr </th>
+                                <th>Name</th>
+                                <th>Contact No</th>
+                                <th>Email</th>
+                                <th>Gender</th>
+                                <th>Department</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let item of empList" id="{{item.employeeId}}">
+                                <td id="employeeId_{{item.employeeId}}" >{{item.employeeId}}</td>
+                                <td id="employeeName_{{item.employeeId}}" >{{item.employeeName}}</td>
+                                <td id="contactNo_{{item.employeeId}}" >{{item.contactNo}}</td>
+                                <td id="emailId_{{item.employeeId}}" >{{item.emailId}}</td>
+                                <td id="gender_{{item.employeeId}}" >{{item.gender}}</td>
+                                <td id="deptId_{{item.employeeId}}" >{{ childDeptListArray[item.deptId] }}</td>
+                                <td>
+                                    <button type="button" class="btn btn-warning btn-sm" (click)="getEmployee(item.employeeId)">Edit</button>
+                                    <button type="button" class="btn btn-danger btn-sm mx-1">Delete</button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <div class="col-4">
+            <div class="card">
+                <div class="card-header bg-secondary">
+                    <div class="row">
+                        <div class="col-6 text-white">
+                            <strong id="addOrUpdateHeader">New Employee</strong>
+                        </div>
+                        <div class="col-6 text-end">
+                            <button class="btn btn-primary">Close</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <form novalidate="" class="mb-4 ng-pristine ng-valid ng-touched">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <label for="employeeName" class="form-label">Employee Name</label>
+                                <input name="employeeName" id="employeeName" placeholder="Enter employee name"
+                                    class="form-control ng-pristine ng-valid ng-touched" [(ngModel)]="employeeObj.employeeName" >
+                            </div>
+                            <div class="col-md-6">
+                                <label for="contactNo" class="form-label">Contact No</label>
+                                <input type="number" [minLength]="10" maxlength="10" name="contactNo" id="contactNo" placeholder="Enter contact number"
+                                    class="form-control ng-untouched ng-pristine ng-valid" [(ngModel)]="employeeObj.contactNo">
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <label for="emailId" class="form-label">Email</label>
+                                <input type="email" name="emailId" id="emailId" placeholder="Enter email"
+                                    class="form-control ng-untouched ng-pristine ng-valid" [(ngModel)]="employeeObj.emailId">
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <label for="deptId" class="form-label">Parent Department</label>
+                                <select id="deptId" name="parentDeptId"
+                                    class="form-select ng-untouched ng-pristine ng-valid" [(ngModel)]="parentDepId">
+                                    <option selected="" disabled="" value="">Select department</option>
+                                    <option *ngFor="let item of deptList" value="item.departmentId"> {{item.departmentName}}</option>
+                                  
+                                </select>
+                            </div>
+                            <div class="col-md-6">
+                                <label for="deptChildId" class="form-label">Child Department</label>
+                                <select id="deptChildId" name="deptChildId" class="form-select ng-untouched ng-pristine ng-valid" [(ngModel)]="employeeObj.deptId">
+                                    <option selected="" disabled="" value="0">Select department</option>
+                                    <option *ngFor="let item of childDeptList" [value]="item.childDeptId"> {{item.departmentName}}</option>
+                                  
+                                </select>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6"><label for="password" class="form-label">Password</label>
+                                <input
+                                    type="password" name="password" id="password" placeholder="Enter password"
+                                    class="form-control ng-untouched ng-pristine ng-valid" [(ngModel)]="employeeObj.password">
+                                </div>
+                            <div class="col-md-6"><label for="gender" class="form-label">Gender</label>
+                                <select
+                                    id="gender" name="gender" class="form-select ng-untouched ng-pristine ng-valid" [(ngModel)]="employeeObj.gender">
+                                    <option selected="" disabled="" value="">Select gender</option>
+                                    <option value="M">Male</option>
+                                    <option value="F">Female</option>
+                                </select>
+                            </div>
+                        </div>
+                        <button *ngIf="isAddBtn" type="button" id="addButton" class="btn btn-warning mt-3" (click)="addEmployees()">Save Employee</button>
+                        <button *ngIf="!isAddBtn" type="button" id="UpdateButton" class="btn btn-warning mt-3" (click)="updateEmployees()">Update Employee</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

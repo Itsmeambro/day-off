@@ -1,0 +1,24 @@
+<div class="topnav">
+    <div>
+        <a routerLink="/dashboard">Day OFF</a>
+        <a class="active"  >Home</a>
+        <a routerLink="/employee">Employee</a>
+        <a routerLink="/earned-leave">Earned Leave</a>
+        <a routerLink="/leave-request">Leave Request</a>
+    </div>
+    <div class="s">
+        <div class="dropdown">
+            <button class="dropbtn"> {{ localDataObj.employeeName }}
+                <i class="fa fa-caret-down"></i>
+            </button>
+            <div class="dropdown-content">
+                <a href="#">Profile</a>
+                <a href="#">Setting</a>
+                <!-- <a href="#">Link 3</a> -->
+            </div>
+        </div>
+        <a (click)="logout()">Logout</a>
+    </div>
+</div>
+
+<router-outlet></router-outlet>
